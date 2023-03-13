@@ -1,0 +1,4 @@
+numpy
+rouge_score
+fire
+openai
