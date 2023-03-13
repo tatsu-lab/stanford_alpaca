@@ -48,6 +48,11 @@ instruction-following demonstrations.
     <a href="https://github.com/tatsu-lab/stanford_alpaca" style="text-decoration: underline">GitHub</a>
 </div>
 
+<p align="center" width="100%">
+<a href="https://crfm.stanford.edu/alpaca/" target="_blank"><img src="https://github.com/tatsu-lab/stanford_alpaca/blob/main/assets/logo.png" alt="Stanford-Alpaca" style="width: 50%; min-width: 300px; display: block; margin: auto;"></a>
+</p>
+
+
 # Overview
 
 Instruction-following models such as GPT-3.5 (text-davinci-003), ChatGPT, Claude, and Bing Chat have become increasingly powerful. 
