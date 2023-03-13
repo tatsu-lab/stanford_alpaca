@@ -49,7 +49,7 @@ instruction-following demonstrations.
 </div>
 
 <p align="center" width="100%">
-<a href="https://crfm.stanford.edu/alpaca/" target="_blank"><img src="https://github.com/tatsu-lab/stanford_alpaca/blob/main/assets/logo.png" alt="Stanford-Alpaca" style="width: 50%; min-width: 300px; display: block; margin: auto;"></a>
+<a href="https://crfm.stanford.edu/alpaca/" target="_blank"><img src="https://raw.githubusercontent.com/tatsu-lab/stanford_alpaca/main/assets/logo.png" alt="Stanford-Alpaca" style="width: 50%; min-width: 300px; display: block; margin: auto;"></a>
 </p>
 
 
