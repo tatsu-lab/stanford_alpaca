@@ -51,6 +51,7 @@ We used the following prompts for fine-tuning the Alpaca model:
  {input}
  
  ### Response:
+ {output}
  ```
 - for examples with an empty input field:
  ```
@@ -60,6 +61,7 @@ We used the following prompts for fine-tuning the Alpaca model:
  {instruction}
  
  ### Response:
+ {output}
  ```
 
 ## Data Generation Process
