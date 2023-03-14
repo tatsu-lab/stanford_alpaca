@@ -62,7 +62,7 @@ We used the following prompts for fine-tuning the Alpaca model:
  ### Response:
  ```
  
- During inference (eg for the web demo), we use the user instruction with an empty input field (first option).
+ During inference (eg for the web demo), we use the user instruction with an empty input field (second option).
 
 ## Data Generation Process
 
