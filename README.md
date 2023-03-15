@@ -91,7 +91,7 @@ The inner circle of the plot represents the root verb of the instructions, and t
 [<img src="assets/parse_analysis.png" width="750" />](./assets/parse_analysis.png)
 
 ## Fine-tuning
-We fine-tune our model using standard huggingface training code with the following hyperparameters:
+We fine-tune our model using standard Hugging Face training code with the following hyperparameters:
 
 | Hyperparameter | Value |
 |----------------|-------|
@@ -101,7 +101,7 @@ We fine-tune our model using standard huggingface training code with the followi
 | Max length     | 512   |
  | Weight decay   | 1     |
 
-We are waiting for huggingface to officially support the llama models (i.e. this [PR](https://github.com/huggingface/transformers/pull/21955) to be merged) before we release a stable version of the finetuning code.
+We are waiting for Hugging Face to officially support the llama models (i.e. this [PR](https://github.com/huggingface/transformers/pull/21955) to be merged) before we release a stable version of the finetuning code.
 
 ### Authors
 All grad students below contributed equally and the order is determined by random draw.
