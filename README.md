@@ -114,7 +114,7 @@ Below is a command that fine-tunes LLaMA-7B with our dataset on a machine with 4
 Replace `<your_random_port>` with a port of your own, `<your_path_to_hf_converted_llama_ckpt_and_tokenizer>` with the 
 path to your converted checkpoint and tokenizer (following instructions in the PR), and `<your_output_dir>` with where you want to store your outputs.
 
-```
+```bash
 torchrun --nproc_per_node=4 --master_port=<your_random_port> train.py \
     --model_name_or_path <your_path_to_hf_converted_llama_ckpt_and_tokenizer> \
     --data_path ./alpaca_data.json \
@@ -163,6 +163,8 @@ torchrun --nproc_per_node=4 --master_port=<your_random_port> train.py \
     --fsdp_transformer_layer_cls_to_wrap 'OPTDecoderLayer' \
     --tf32 True
 ```
+
+Note the given training script is meant to be simple and easy to use, and is not particularly optimized.
 
 ### Authors
 All grad students below contributed equally and the order is determined by random draw.
