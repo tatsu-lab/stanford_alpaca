@@ -99,7 +99,7 @@ We fine-tune our models using standard Hugging Face training code with the follo
 | Learning rate  | 2e-5  |
 | Epochs         | 3     |
 | Max length     | 512   |
- | Weight decay   | 1     |
+ | Weight decay   | 0     |
 
 Given Hugging Face hasn't officially supported the LLaMA models, we fine-tuned LLaMA with Hugging Face's transformers library by installing it from a particular fork (i.e. this [PR](https://github.com/huggingface/transformers/pull/21955) to be merged).
 The hash of the specific commit we installed was `68d640f7c368bcaaaecfc678f11908ebbd3d6176`.
@@ -116,6 +116,7 @@ pip install -r requirements.txt
 Then, install the particular fork of Hugging Face's transformers library.
 
 Below is a command that fine-tunes LLaMA-7B with our dataset on a machine with 4 A100 80G GPUs in FSDP `full_shard` mode. 
+We were able to reproduce a model of similar quality as the one we hosted in our demo with the following command using **Python 3.10**.
 Replace `<your_random_port>` with a port of your own, `<your_path_to_hf_converted_llama_ckpt_and_tokenizer>` with the 
 path to your converted checkpoint and tokenizer (following instructions in the PR), and `<your_output_dir>` with where you want to store your outputs.
 
@@ -170,6 +171,7 @@ torchrun --nproc_per_node=4 --master_port=<your_random_port> train.py \
 ```
 
 Note the given training script is meant to be simple and easy to use, and is not particularly optimized.
+To run on more gpus, you may prefer to turn down `gradient_accumulation_steps` to keep a global batch size of 128. Batch size has not been tested for optimality.
 
 ### Authors
 All grad students below contributed equally and the order is determined by random draw.
