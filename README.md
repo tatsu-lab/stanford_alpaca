@@ -91,7 +91,7 @@ The inner circle of the plot represents the root verb of the instructions, and t
 [<img src="assets/parse_analysis.png" width="750" />](./assets/parse_analysis.png)
 
 ## Fine-tuning
-We fine-tune our model using standard Hugging Face training code with the following hyperparameters:
+We fine-tune our models using standard Hugging Face training code with the following hyperparameters:
 
 | Hyperparameter | Value |
 |----------------|-------|
@@ -101,7 +101,68 @@ We fine-tune our model using standard Hugging Face training code with the follow
 | Max length     | 512   |
  | Weight decay   | 1     |
 
-We are waiting for Hugging Face to officially support the llama models (i.e. this [PR](https://github.com/huggingface/transformers/pull/21955) to be merged) before we release a stable version of the finetuning code.
+Given Hugging Face hasn't officially supported the LLaMA models, we fine-tuned LLaMA with Hugging Face's transformers library by installing it from a particular fork (i.e. this [PR](https://github.com/huggingface/transformers/pull/21955) to be merged).
+The hash of the specific commit we installed was `68d640f7c368bcaaaecfc678f11908ebbd3d6176`.
+
+To reproduce our fine-tuning runs for LLaMA, first install the requirements 
+```bash
+pip install -r requirements.txt
+```
+Then, install the particular fork of Hugging Face's transformers library.
+
+Below is a command that fine-tunes LLaMA-7B with our dataset on a machine with 4 A100 80G GPUs in FSDP `full_shard` mode. 
+Replace `<your_random_port>` with a port of your own, `<your_path_to_hf_converted_llama_ckpt_and_tokenizer>` with the 
+path to your converted checkpoint and tokenizer (following instructions in the PR), and `<your_output_dir>` with where you want to store your outputs.
+
+```
+torchrun --nproc_per_node=4 --master_port=<your_random_port> train.py \
+    --model_name_or_path <your_path_to_hf_converted_llama_ckpt_and_tokenizer> \
+    --data_path ./alpaca_data.json \
+    --bf16 True \
+    --output_dir <your_output_dir> \
+    --num_train_epochs 3 \
+    --per_device_train_batch_size 4 \
+    --per_device_eval_batch_size 4 \
+    --gradient_accumulation_steps 8 \
+    --evaluation_strategy "no" \
+    --save_strategy "steps" \
+    --save_steps 2000 \
+    --save_total_limit 1 \
+    --learning_rate 2e-5 \
+    --weight_decay 0. \
+    --warmup_ratio 0.03 \
+    --lr_scheduler_type "cosine" \
+    --logging_steps 1 \
+    --fsdp "full_shard auto_wrap" \
+    --fsdp_transformer_layer_cls_to_wrap 'LLaMADecoderLayer' \
+    --tf32 True
+```
+
+The same script also works for OPT fine-tuning. Here's an example for fine-tuning OPT-6.7B
+
+```bash
+torchrun --nproc_per_node=4 --master_port=<your_random_port> train.py \
+    --model_name_or_path "facebook/opt-6.7b" \
+    --data_path ./alpaca_data.json \
+    --bf16 True \
+    --output_dir <your_output_dir> \
+    --num_train_epochs 3 \
+    --per_device_train_batch_size 4 \
+    --per_device_eval_batch_size 4 \
+    --gradient_accumulation_steps 8 \
+    --evaluation_strategy "no" \
+    --save_strategy "steps" \
+    --save_steps 2000 \
+    --save_total_limit 1 \
+    --learning_rate 2e-5 \
+    --weight_decay 0. \
+    --warmup_ratio 0.03 \
+    --lr_scheduler_type "cosine" \
+    --logging_steps 1 \
+    --fsdp "full_shard auto_wrap" \
+    --fsdp_transformer_layer_cls_to_wrap 'OPTDecoderLayer' \
+    --tf32 True
+```
 
 ### Authors
 All grad students below contributed equally and the order is determined by random draw.
