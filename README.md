@@ -77,7 +77,7 @@ We used the following prompts for fine-tuning the Alpaca model:
 
 We built on the data generation pipeline from [self-instruct](https://github.com/yizhongw/self-instruct) and made the following modifications:
 - We used `text-davinci-003` to generate the instruction data instead of `davinci`.
-- We wrote a new prompt (`prompt.txt`) that explicitly gave the requirement of instruction generation to `text-davinci-003`.
+- We wrote a new prompt (`prompt.txt`) that explicitly gave the requirement of instruction generation to `text-davinci-003`. Note: there is a slight error in the prompt we used, and future users should incorporate the edit in https://github.com/tatsu-lab/stanford_alpaca/pull/24
 - We adopted much more aggressive batch decoding, i.e., generating 20 instructions at once, which significantly reduced the cost of data generation.
 - We simplified the data generation pipeline by discarding the difference between classification and non-classification instructions.
 - We only generated a single instance for each instruction, instead of 2 to 3 instances as in [1].
