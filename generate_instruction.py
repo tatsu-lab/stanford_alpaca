@@ -159,7 +159,8 @@ def generate_instruction_following_data(
         decoding_args = utils.OpenAIDecodingArguments(
             temperature=temperature,
             n=1,
-            max_tokens=3072,  # hard-code to maximize the length. the requests will be automatically adjusted
+            total_prompt_tokens = sum(len(tokenizer.encode(prompt)) for prompt in batch_inputs)
+            max_tokens = 4097 - total_prompt_tokens,  # hard-code to maximize the length. the requests will be automatically adjusted
             top_p=top_p,
             stop=["\n20", "20.", "20."],
         )
