@@ -12,6 +12,7 @@ This is the repo for the Stanford Alpaca project, which aims to build and share 
 - A [**web demo**](https://crfm.stanford.edu/alpaca/) to interact with our Alpaca model
 - The [52K data](#data-release) used for fine-tuning the model
 - The code for [generating the data](#data-generation-process)
+- The code for [fine-tuning the model](#fine-tuning)
 
 ## Overview
 
@@ -138,6 +139,15 @@ torchrun --nproc_per_node=4 --master_port=<your_random_port> train.py \
     --fsdp_transformer_layer_cls_to_wrap 'LLaMADecoderLayer' \
     --tf32 True
 ```
+
+### Warning
+`fsdp_transformer_layer_cls_to_wrap` must be set to the name of the specific decoder layer. 
+The LLaMA Hugging Face PR is not stable. 
+Earlier commits used the name `LLaMADecoderLayer` for their decoder layer (the commit hash our code is based on this). 
+More recent commits use `LlamaDecoderLayer` (notice the small case difference).
+Not setting `fsdp_transformer_layer_cls_to_wrap` to the correct name will lead to drastic slowdowns in training.
+
+### Side notes
 
 The same script also works for OPT fine-tuning. Here's an example for fine-tuning OPT-6.7B
 
