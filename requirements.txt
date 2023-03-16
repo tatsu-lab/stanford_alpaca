@@ -2,7 +2,7 @@ numpy
 rouge_score
 fire
 openai
-transformers>=4.26.1
+git+https://github.com/huggingface/transformers.git
 torch
 sentencepiece
 tokenizers==0.12.1
