@@ -13,7 +13,7 @@ This is the repo for the Stanford Alpaca project, which aims to build and share 
 - The code for [generating the data](#data-generation-process)
 - The code for [fine-tuning the model](#fine-tuning)
 
-Note: Due to safety concerns raised by the community, we have decided to shut down the Alpaca live demo. Thank you to everyone who provided valuable feedback.
+Note: We thank the community for feedback on Stanford-Alpaca and supporting our research. Our live demo is suspended until further notice.
 
 ## Overview
 
