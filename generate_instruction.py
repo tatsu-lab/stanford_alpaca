@@ -20,6 +20,7 @@ import numpy as np
 import tqdm
 from rouge_score import rouge_scorer
 import utils
+import openai_utils
 
 import fire
 
@@ -156,7 +157,7 @@ def generate_instruction_following_data(
             prompt_instructions = random.sample(seed_instruction_data, num_prompt_instructions)
             prompt = encode_prompt(prompt_instructions)
             batch_inputs.append(prompt)
-        decoding_args = utils.OpenAIDecodingArguments(
+        decoding_args = openai_utils.OpenAIDecodingArguments(
             temperature=temperature,
             n=1,
             max_tokens=3072,  # hard-code to maximize the length. the requests will be automatically adjusted
@@ -164,7 +165,7 @@ def generate_instruction_following_data(
             stop=["\n20", "20.", "20."],
         )
         request_start = time.time()
-        results = utils.openai_completion(
+        results = openai_utils.openai_completion(
             prompts=batch_inputs,
             model_name=model_name,
             batch_size=request_batch_size,
