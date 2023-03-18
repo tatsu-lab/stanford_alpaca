@@ -109,6 +109,8 @@ The hash of the specific commit we installed was `68d640f7c368bcaaaecfc678f11908
 To reproduce our fine-tuning runs for LLaMA, first install the requirements 
 ```bash
 pip install -r requirements.txt
+# for who only want to fine-tuning
+pip install -r requires.train.txt
 ```
 Then, install the particular fork of Hugging Face's transformers library.
 
