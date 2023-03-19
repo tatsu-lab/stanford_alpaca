@@ -3,7 +3,7 @@
 <img src="https://user-images.githubusercontent.com/65791808/226146242-7f204217-7560-450c-9d68-e2e09b40b809.png" alt="Stanford-Alpaca" style="width: 50%; min-width: 300px; display: block; margin: auto;"></a>
 </p>
 
-# Stanford Alpaca: An Instruction-following LLaMA Model 
+# Burrito: An Instruction-following LLaMA Model 
 [![License](https://img.shields.io/badge/License-Apache_2.0-green.svg)](https://github.com/tatsu-lab/stanford_alpaca/blob/main/LICENSE) 
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/release/python-390/) 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) 
