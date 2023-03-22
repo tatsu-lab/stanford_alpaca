@@ -2,7 +2,7 @@
 
 ## Motivation
 ### For what purpose was the dataset created?
-To enable more open-source research on instruction following large language models, we use generate 52K instruction-followng demonstrations using OpenAI's text-davinci-003 model.
+To enable more open-source research on instruction following large language models, we use generate 52K instruction-following demonstrations using OpenAI's text-davinci-003 model.
 
 ### Who created the dataset
 - [Rohan Taori](https://www.rohantaori.com/)
