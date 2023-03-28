@@ -207,6 +207,20 @@ def generate_instruction_following_data(
         print(f"Request {request_idx} took {request_duration:.2f}s, processing took {process_duration:.2f}s")
         print(f"Generated {total} instructions, kept {keep} instructions")
         utils.jdump(machine_instruction_data, os.path.join(output_dir, "regen.json"))
+        
+        
+def generate_instruction_alpaca(
+    output_dir="./data",
+    data_file="./alpaca_data.json",
+    num_instructions_to_generate=5000,
+):
+    with open(data_file, "r") as f:
+        data = json.load(f)
+        
+    machine_instruction_data = random.sample(data, num_instructions_to_generate)
+    
+    with open(f"{output_dir}/alpaca_5000.json", "w") as f:
+        json.dump(machine_instruction_data, f)
 
 
 def main(task, **kwargs):
