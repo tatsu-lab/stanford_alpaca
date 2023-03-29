@@ -104,15 +104,18 @@ The inner circle of the plot represents the root verb of the instructions, and t
 
 ## Fine-tuning
 
-We fine-tune our models using standard Hugging Face training code with the following hyperparameters:
+We fine-tune our models using standard Hugging Face training code.
+We fine-tune LLaMA-7B and LLaMA-13B with the following hyperparameters:
 
-| Hyperparameter | Value |
-|----------------|-------|
-| Batch size     | 128   |
-| Learning rate  | 2e-5  |
-| Epochs         | 3     |
-| Max length     | 512   |
- | Weight decay   | 0     |
+| Hyperparameter | LLaMA-7B | LLaMA-13B |
+|----------------|----------|-----------|
+| Batch size     | 128      | 128       |
+| Learning rate  | 2e-5     | 1e-5      |
+| Epochs         | 3        | 5         |
+| Max length     | 512      | 512       |
+| Weight decay   | 0        | 0         |
+
+We have also fine-tuned larger variants of LLaMA and are in the process of evaluating those models.
 
 Given Hugging Face hasn't officially supported the LLaMA models, we fine-tuned LLaMA with Hugging Face's transformers library by installing it from a particular fork (i.e. this [PR](https://github.com/huggingface/transformers/pull/21955) to be merged).
 The hash of the specific commit we installed was `68d640f7c368bcaaaecfc678f11908ebbd3d6176`.
