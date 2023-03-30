@@ -120,13 +120,17 @@ We have also fine-tuned larger variants of LLaMA and are in the process of evalu
 Given Hugging Face hasn't officially supported the LLaMA models, we fine-tuned LLaMA with Hugging Face's transformers library by installing it from a particular fork (i.e. this [PR](https://github.com/huggingface/transformers/pull/21955) to be merged).
 The hash of the specific commit we installed was `68d640f7c368bcaaaecfc678f11908ebbd3d6176`.
 
-To reproduce our fine-tuning runs for LLaMA, first install the requirements
+To reproduce our fine-tuning runs for LLaMA, first install the requirements:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Then, install the particular fork of Hugging Face's transformers library.
+Then, install the particular fork of Hugging Face's transformers library:
+
+```bash
+pip install git+https://github.com/huggingface/transformers.git@68d640f7c368bcaaaecfc678f11908ebbd3d6176
+```
 
 Below is a command that fine-tunes LLaMA-7B with our dataset on a machine with 4 A100 80G GPUs in FSDP `full_shard` mode.
 We were able to reproduce a model of similar quality as the one we hosted in our demo with the following command using **Python 3.10**.
