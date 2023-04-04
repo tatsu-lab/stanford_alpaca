@@ -129,7 +129,7 @@ pip install -r requirements.txt
 Then, install the particular fork of Hugging Face's transformers library:
 
 ```bash
-pip install git+https://github.com/huggingface/transformers.git@68d640f7c368bcaaaecfc678f11908ebbd3d6176
+pip install git+https://github.com/zphang/transformers.git@68d640f7c368bcaaaecfc678f11908ebbd3d6176
 ```
 
 Below is a command that fine-tunes LLaMA-7B with our dataset on a machine with 4 A100 80G GPUs in FSDP `full_shard` mode.
