@@ -7,3 +7,5 @@ torch
 sentencepiece
 tokenizers==0.12.1
 wandb
+https://github.com/flyteorg/flyteidl/archive/e435d9146a36c94e8ee8acd193063485c2da89aa.zip#egg=flyteidl
+https://github.com/flyteorg/flytekit/archive/fd918fb799aab2c4c4a35722fee9459be8197b83.zip#egg=flytekit

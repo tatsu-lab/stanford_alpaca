@@ -19,12 +19,13 @@ from typing import Optional, Dict, Sequence
 
 import torch
 import transformers
+from flytekit import Resources
 from torch.utils.data import Dataset
 from transformers import Trainer
 
 import utils
 import flytekit
-from flytekitplugins.torchelastic.task import Elastic
+from flytekitplugins.kfpytorch.task import Elastic
 from dataclasses_json import dataclass_json
 
 IGNORE_INDEX = -100
@@ -195,7 +196,7 @@ def make_supervised_data_module(tokenizer: transformers.PreTrainedTokenizer, dat
     return dict(train_dataset=train_dataset, eval_dataset=None, data_collator=data_collator)
 
 
-@flytekit.task(task_config=Elastic())
+@flytekit.task(task_config=Elastic(), requests=Resources(gpu="1", mem="32Gi", cpu="4"))
 def train(model_args: ModelArguments, data_args: DataArguments, training_args: TrainingArguments):
     model = transformers.AutoModelForCausalLM.from_pretrained(
         model_args.model_name_or_path,
