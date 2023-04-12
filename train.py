@@ -196,7 +196,7 @@ def make_supervised_data_module(tokenizer: transformers.PreTrainedTokenizer, dat
     return dict(train_dataset=train_dataset, eval_dataset=None, data_collator=data_collator)
 
 
-@flytekit.task(task_config=Elastic(), requests=Resources(gpu="1", mem="32Gi", cpu="4"))
+@flytekit.task(task_config=Elastic(), environment={"TRANSFORMERS_CACHE": "/tmp"})  # requests=Resources(gpu="1", mem="32Gi", cpu="4"))
 def train(model_args: ModelArguments, data_args: DataArguments, training_args: TrainingArguments):
     model = transformers.AutoModelForCausalLM.from_pretrained(
         model_args.model_name_or_path,
