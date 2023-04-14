@@ -196,6 +196,8 @@ torchrun --nproc_per_node=4 --master_port=<your_random_port> train.py \
 Note the given training script is meant to be simple and easy to use, and is not particularly optimized.
 To run on more gpus, you may prefer to turn down `gradient_accumulation_steps` to keep a global batch size of 128. Global batch size has not been tested for optimality.
 
+In case of a slowdown during multi-A100 training, please consider changing `--fsdp` from `"full_shard auto_wrap"` to `"shard_grad_op auto_wrap"`.
+
 ### Authors
 
 All grad students below contributed equally and the order is determined by random draw.
