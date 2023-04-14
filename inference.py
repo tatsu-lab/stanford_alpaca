@@ -90,17 +90,9 @@ def inference():
                              max_new_tokens=inference_args.model_max_length,
                              return_dict_in_generate=True,
                              output_scores=True)
-    transition_scores = model.compute_transition_scores(
-      outputs.sequences, outputs.scores, normalize_logits=True
-    )
-    # input_length is the length of the input prompt for decoder-only models, like the GPT family, and 1 for
-    # encoder-decoder models, like BART or T5.
     input_length = 1 if model.config.is_encoder_decoder else inputs.input_ids.shape[1]
     generated_tokens = outputs.sequences[:, input_length:]
 
-    for tok, score in zip(generated_tokens[0], transition_scores[0]):
-      # | token | token string | logits | probability
-      print(f"| {tok:5d} | {tokenizer.decode(tok):8s} | {score.cpu().numpy():.3f} | {np.exp(score.cpu().numpy()):.2%}")
     ctx += f"Instruction: {instruction}\n" + f"Response: {generated_tokens[0]}\n"
     print("Response:", tokenizer.decode(generated_tokens[0]))
     print()
