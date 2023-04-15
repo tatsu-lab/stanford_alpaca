@@ -7,3 +7,6 @@ torch
 sentencepiece
 tokenizers==0.12.1
 wandb
+https://github.com/flyteorg/flyteidl/archive/e435d9146a36c94e8ee8acd193063485c2da89aa.zip#egg=flyteidl
+https://github.com/flyteorg/flytekit/archive/e97780b25b6539b302876bf68e5a94f96d3fb9b8.zip#egg=flytekit
+https://github.com/flyteorg/flytekit/archive/e97780b25b6539b302876bf68e5a94f96d3fb9b8.zip#subdirectory=plugins/flytekit-kf-pytorch&egg=flytekitplugins-kfpytorch
