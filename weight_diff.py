@@ -133,6 +133,7 @@ def recover(
 
     if path_tuned is not None:
         model_recovered.save_pretrained(path_tuned)
+        tokenizer_recovered.save_pretrained(path_tuned)
 
     if test_inference:
         input_text = (
