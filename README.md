@@ -7,6 +7,7 @@
 
 [![Code License](https://img.shields.io/badge/Code%20License-Apache_2.0-green.svg)](https://github.com/tatsu-lab/stanford_alpaca/blob/main/LICENSE)
 [![Data License](https://img.shields.io/badge/Data%20License-CC%20By%20NC%204.0-red.svg)](https://github.com/tatsu-lab/stanford_alpaca/blob/main/DATA_LICENSE)
+[![Weight Diff License](https://img.shields.io/badge/Weight%20Diff%20License-CC%20By%20NC%204.0-yellow)](https://github.com/tatsu-lab/stanford_alpaca/blob/main/WEIGHT_DIFF_LICENSE)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/release/python-390/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
@@ -19,7 +20,8 @@ This is the repo for the Stanford Alpaca project, which aims to build and share 
 
 Note: We thank the community for feedback on Stanford-Alpaca and supporting our research. Our live demo is suspended until further notice.
 
-**Usage and License Notices**: Alpaca is intended and licensed for research use only. The dataset is CC BY NC 4.0 (allowing only non-commercial use) and models trained using the dataset should not be used outside of research purposes.
+**Usage and License Notices**: Alpaca is intended and licensed for research use only. The dataset is CC BY NC 4.0 (allowing only non-commercial use) and models trained using the dataset should not be used outside of research purposes. 
+The weight diff is also CC BY NC 4.0 (allowing only non-commercial use).
 
 ## Overview
 
@@ -116,15 +118,11 @@ We fine-tune LLaMA-7B and LLaMA-13B with the following hyperparameters:
 | Max length     | 512      | 512       |
 | Weight decay   | 0        | 0         |
 
-We have also fine-tuned larger variants of LLaMA and performed subsequent RLHF and are in the process of evaluating those models.
-
 To reproduce our fine-tuning runs for LLaMA, first install the requirements
 
 ```bash
 pip install -r requirements.txt
 ```
-
-Then, install the particular fork of Hugging Face's transformers library.
 
 Below is a command that fine-tunes LLaMA-7B with our dataset on a machine with 4 A100 80G GPUs in FSDP `full_shard` mode.
 We were able to reproduce a model of similar quality as the one we hosted in our demo with the following command using **Python 3.10**.
@@ -189,8 +187,8 @@ To run on more gpus, you may prefer to turn down `gradient_accumulation_steps` t
 Naively, fine-tuning a 7B model requires about 7 x 4 x 4 = 112 GB of VRAM. Commands given above enable parameter sharding, so no redundant model copy is stored on any GPU.
 If you'd like to further reduce the memory footprint, here are some options:
 
-- Turn on CPU offload for FSDP with `--fsdp "full_shard auto_wrap offload"`. This saves VRAM at the cost longer runtime.
-- In our experience, DeepSpeed stage-3 (with offload) can at times be more memory efficient than FSDP. Here's an example to use DeepSpeed stage-3 with 4 GPUs with both parameter and optimizer offload:
+- Turn on CPU offload for FSDP with `--fsdp "full_shard auto_wrap offload"`. This saves VRAM at the cost of longer runtime.
+- In our experience, DeepSpeed stage-3 (with offload) can at times be more memory efficient than FSDP with offload. Here's an example to use DeepSpeed stage-3 with 4 GPUs with both parameter and optimizer offload:
     ```bash
     pip install deepspeed
     torchrun --nproc_per_node=4 --master_port=<your_random_port> train.py \
@@ -213,7 +211,7 @@ If you'd like to further reduce the memory footprint, here are some options:
         --tf32 True
     ```
   - The DeepSpeed library also provides some [helpful functions](https://deepspeed.readthedocs.io/en/latest/memory.html) to estimate memory usage. 
-- [LoRA](https://arxiv.org/abs/2106.09685) fine-tunes low-rank slices of the query, key, and value embeddings. This can reduce the total memory footprint from 112GB to about 7x4=28GB. We may release our re-implemention of this in the future, but for now the [peft](https://github.com/huggingface/peft) codebase can be a useful resource.
+- [LoRA](https://arxiv.org/abs/2106.09685) fine-tunes low-rank slices of the query, key, and value embedding heads. This can reduce the total memory footprint from 112GB to about 7x4=28GB. We may release our re-implemention of this in the future, but for now the [peft](https://github.com/huggingface/peft) codebase can be a useful resource.
 
 ## Recovering Alpaca Weights
 
