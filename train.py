@@ -25,10 +25,10 @@ from transformers import Trainer
 import utils
 
 IGNORE_INDEX = -100
-DEFAULT_PAD_TOKEN = "[PAD]"
+DEFAULT_PAD_TOKEN = "<pad>"
 DEFAULT_EOS_TOKEN = "</s>"
-DEFAULT_BOS_TOKEN = "</s>"
-DEFAULT_UNK_TOKEN = "</s>"
+DEFAULT_BOS_TOKEN = "<s>"
+DEFAULT_UNK_TOKEN = "<unk>"
 PROMPT_DICT = {
     "prompt_input": (
         "Below is an instruction that describes a task, paired with an input that provides further context. "
