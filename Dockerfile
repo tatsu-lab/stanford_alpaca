@@ -1,10 +1,11 @@
-ARG PYTHON_VERSION
-FROM python:3.9-slim-buster
+FROM pytorch/pytorch:2.0.0-cuda11.7-cudnn8-runtime
 
-MAINTAINER Union AI Team 
 LABEL org.opencontainers.image.source https://github.com/unionai-oss/stanford-alpaca
 
 WORKDIR /root
+ENV VENV /opt/venv
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
 ENV PYTHONPATH /root
 
 ARG VERSION

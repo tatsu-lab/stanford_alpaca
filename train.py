@@ -14,6 +14,7 @@
 
 import copy
 import logging
+import os
 from dataclasses import dataclass, field
 from typing import Optional, Dict, Sequence
 
@@ -196,8 +197,18 @@ def make_supervised_data_module(tokenizer: transformers.PreTrainedTokenizer, dat
     return dict(train_dataset=train_dataset, eval_dataset=None, data_collator=data_collator)
 
 
-@flytekit.task(task_config=Elastic(), environment={"TRANSFORMERS_CACHE": "/tmp"})  # requests=Resources(gpu="1", mem="32Gi", cpu="4"))
-def train(model_args: ModelArguments, data_args: DataArguments, training_args: TrainingArguments):
+# TODO: update the Dockerfile for use with cuda
+@flytekit.task(
+    task_config=Elastic(nnodes=1),
+    environment={
+        "TRANSFORMERS_CACHE": "/tmp",
+        "WANDB_API_KEY": "<wandb_key>",
+        "WANDB_PROJECT": "unioncloud-llms",
+    },
+    requests=Resources(mem="40Gi", cpu="1", gpu="1"),
+)
+def train(model_args: ModelArguments, data_args: DataArguments, training_args: TrainingArguments) -> flytekit.file.FlyteFile:
+    os.environ["WANDB_RUN_ID"] = os.environ.get("FLYTE_INTERNAL_EXECUTION_ID", "foo")
     model = transformers.AutoModelForCausalLM.from_pretrained(
         model_args.model_name_or_path,
         cache_dir=training_args.cache_dir,
@@ -230,6 +241,12 @@ def train(model_args: ModelArguments, data_args: DataArguments, training_args: T
     trainer.train()
     trainer.save_state()
     safe_save_model_for_hf_trainer(trainer=trainer, output_dir=training_args.output_dir)
+    return flytekit.file.FlyteFile(path=training_args.output_dir)
+
+
+@flytekit.workflow
+def train_wf(model_args: ModelArguments, data_args: DataArguments, training_args: TrainingArguments) -> flytekit.file.FlyteFile:
+    return train(model_args=model_args, data_args=data_args, training_args=training_args)
 
 
 def train_cli():
