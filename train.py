@@ -66,11 +66,12 @@ def smart_tokenizer_and_embedding_resize(
     special_tokens_dict: Dict,
     tokenizer: transformers.PreTrainedTokenizer,
     model: transformers.PreTrainedModel,
-):
+) -> None:
     """Resize tokenizer and embedding.
 
     Note: This is the unoptimized version that may make your embedding size not be divisible by 64.
     """
+
     num_new_tokens = tokenizer.add_special_tokens(special_tokens_dict)
     model.resize_token_embeddings(len(tokenizer))
 
@@ -146,7 +147,7 @@ class SupervisedDataset(Dataset):
         self.input_ids = data_dict["input_ids"]
         self.labels = data_dict["labels"]
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.input_ids)
 
     def __getitem__(self, i) -> Dict[str, torch.Tensor]:
@@ -159,7 +160,7 @@ class DataCollatorForSupervisedDataset(object):
 
     tokenizer: transformers.PreTrainedTokenizer
 
-    def __call__(self, instances: Sequence[Dict]) -> Dict[str, torch.Tensor]:
+    def __call__(self, instances: Sequence[Dict]) -> Dict[str, torch.Tensor, torch.Tensor]:
         input_ids, labels = tuple([instance[key] for instance in instances] for key in ("input_ids", "labels"))
         input_ids = torch.nn.utils.rnn.pad_sequence(
             input_ids, batch_first=True, padding_value=self.tokenizer.pad_token_id
@@ -179,7 +180,7 @@ def make_supervised_data_module(tokenizer: transformers.PreTrainedTokenizer, dat
     return dict(train_dataset=train_dataset, eval_dataset=None, data_collator=data_collator)
 
 
-def train():
+def train() -> None:
     parser = transformers.HfArgumentParser((ModelArguments, DataArguments, TrainingArguments))
     model_args, data_args, training_args = parser.parse_args_into_dataclasses()
 
@@ -195,6 +196,7 @@ def train():
         padding_side="right",
         use_fast=False,
     )
+
     special_tokens_dict = dict()
     if tokenizer.pad_token is None:
         special_tokens_dict["pad_token"] = DEFAULT_PAD_TOKEN
