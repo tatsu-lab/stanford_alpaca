@@ -7,3 +7,6 @@ torch
 sentencepiece
 tokenizers>=0.13.3
 wandb
+deepspeed>=0.9.1
+accelerate
+azureml-sdk
