@@ -122,6 +122,8 @@ To reproduce our fine-tuning runs for LLaMA, first install the requirements
 
 ```bash
 pip install -r requirements.txt
+# for who only want to fine-tuning
+pip install -r requires.train.txt
 ```
 
 Below is a command that fine-tunes LLaMA-7B with our dataset on a machine with 4 A100 80G GPUs in FSDP `full_shard` mode.

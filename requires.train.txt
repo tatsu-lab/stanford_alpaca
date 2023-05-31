@@ -1,0 +1,4 @@
+numpy
+transformers>=4.26.1
+torch
+tokenizers==0.12.1
