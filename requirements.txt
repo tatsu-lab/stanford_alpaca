@@ -1,7 +1,7 @@
 numpy
 rouge_score
 fire
-openai
+openai==0.28.0
 transformers>=4.28.1
 torch
 sentencepiece
