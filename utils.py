@@ -131,6 +131,22 @@ def openai_completion(
 
 
 def _make_w_io_base(f, mode: str):
+    """
+    Helper function to ensure a file is opened in write mode if it's not already an IOBase object.
+
+    Parameters
+    ----------
+    f : str or IOBase
+        The file path or IOBase object.
+
+    mode : str
+        The mode for opening the file.
+
+    Returns
+    -------
+    f : IOBase
+        The file object opened in the specified mode.
+    """
     if not isinstance(f, io.IOBase):
         f_dirname = os.path.dirname(f)
         if f_dirname != "":
@@ -140,20 +156,51 @@ def _make_w_io_base(f, mode: str):
 
 
 def _make_r_io_base(f, mode: str):
+    """
+    Helper function to ensure a file is opened in read mode if it's not already an IOBase object.
+
+    Parameters
+    ----------
+    f : str or IOBase
+        The file path or IOBase object.
+
+    mode : str
+        The mode for opening the file.
+
+    Returns
+    -------
+    f : IOBase
+        The file object opened in the specified mode.
+    """
     if not isinstance(f, io.IOBase):
         f = open(f, mode=mode)
     return f
 
 
-def jdump(obj, f, mode="w", indent=4, default=str):
-    """Dump a str or dictionary to a file in json format.
+def jdump(obj, f, mode="w", indent:int=4, default=str) -> None:
+    """
+    Dump a string or dictionary to a file in JSON format.
 
-    Args:
-        obj: An object to be written.
-        f: A string path to the location on disk.
-        mode: Mode for opening the file.
-        indent: Indent for storing json dictionaries.
-        default: A function to handle non-serializable entries; defaults to `str`.
+    Parameters
+    ----------
+    obj : object
+        An object to be written.
+
+    f : str or IOBase
+        A string path to the location on disk or an IOBase object.
+
+    mode : str, optional
+        The mode for opening the file. Default is "w".
+
+    indent : int, optional
+        Indent for storing JSON dictionaries. Default is 4.
+
+    default : function, optional
+        A function to handle non-serializable entries; defaults to `str`.
+
+    Returns
+    -------
+    None
     """
     f = _make_w_io_base(f, mode)
     if isinstance(obj, (dict, list)):
@@ -165,8 +212,23 @@ def jdump(obj, f, mode="w", indent=4, default=str):
     f.close()
 
 
-def jload(f, mode="r"):
-    """Load a .json file into a dictionary."""
+def jload(f, mode:str="r") -> dict:
+    """
+    Load a .json file into a dictionary.
+
+    Parameters
+    ----------
+    f : str or IOBase
+        A string path to the JSON file or an IOBase object.
+
+    mode : str, optional
+        The mode for opening the file. Default is "r".
+
+    Returns
+    -------
+    jdict : dict
+        The dictionary loaded from the JSON file.
+    """
     f = _make_r_io_base(f, mode)
     jdict = json.load(f)
     f.close()

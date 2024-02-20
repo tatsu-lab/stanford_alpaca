@@ -25,11 +25,33 @@ from train import smart_tokenizer_and_embedding_resize
 def make_diff(
     path_raw: str, path_tuned: str, path_diff: str, device="cpu",  # "cuda" or "cpu"
 ):
-    """Make the weight diff.
+    """
+    Make the weight difference between two pre-trained models.
 
-    This function is given to present full transparency of how the weight diff was created.
+    This function is provided to ensure full transparency of how the weight difference was created.
 
-    Run:
+    Parameters
+    ----------
+    path_raw : str
+        The path to the directory or file containing the weights of the raw model.
+
+    path_tuned : str
+        The path to the directory or file containing the weights of the tuned model.
+
+    path_diff : str
+        The path to save the weight difference.
+
+    device : str, optional
+        The device to run the model on. Default is "cpu".
+
+    Raises
+    ------
+    FileNotFoundError
+        If the specified paths do not exist.
+
+    Notes
+    -----
+    Run the following command to execute the function:
         python weight_diff.py make_diff --path_raw <your_path_raw> --path_tuned <your_path_tuned> --path_diff <your_path_diff>
     """
     model_tuned: transformers.PreTrainedModel = transformers.AutoModelForCausalLM.from_pretrained(

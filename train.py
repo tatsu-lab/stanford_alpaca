@@ -67,9 +67,25 @@ def smart_tokenizer_and_embedding_resize(
     tokenizer: transformers.PreTrainedTokenizer,
     model: transformers.PreTrainedModel,
 ):
-    """Resize tokenizer and embedding.
+    """
+    Resize tokenizer and embedding.
 
-    Note: This is the unoptimized version that may make your embedding size not be divisible by 64.
+    This is the unoptimized version that may make your embedding size not be divisible by 64.
+
+    Parameters
+    ----------
+    special_tokens_dict : Dict
+        A dictionary containing special tokens to be added to the tokenizer.
+
+    tokenizer : transformers.PreTrainedTokenizer
+        The tokenizer instance.
+
+    model : transformers.PreTrainedModel
+        The model instance.
+
+    Returns
+    -------
+    None
     """
     num_new_tokens = tokenizer.add_special_tokens(special_tokens_dict)
     model.resize_token_embeddings(len(tokenizer))
@@ -86,7 +102,22 @@ def smart_tokenizer_and_embedding_resize(
 
 
 def _tokenize_fn(strings: Sequence[str], tokenizer: transformers.PreTrainedTokenizer) -> Dict:
-    """Tokenize a list of strings."""
+    """
+    Tokenize a list of strings.
+
+    Parameters
+    ----------
+    strings : Sequence[str]
+        A list of strings to tokenize.
+
+    tokenizer : transformers.PreTrainedTokenizer
+        The tokenizer instance.
+
+    Returns
+    -------
+    Dict
+        A dictionary containing the tokenized input ids and their corresponding lengths.
+    """
     tokenized_list = [
         tokenizer(
             text,
@@ -114,7 +145,25 @@ def preprocess(
     targets: Sequence[str],
     tokenizer: transformers.PreTrainedTokenizer,
 ) -> Dict:
-    """Preprocess the data by tokenizing."""
+    """
+    Preprocess the data by tokenizing.
+
+    Parameters
+    ----------
+    sources : Sequence[str]
+        A sequence of source strings.
+
+    targets : Sequence[str]
+        A sequence of target strings.
+
+    tokenizer : transformers.PreTrainedTokenizer
+        The tokenizer instance.
+
+    Returns
+    -------
+    Dict
+        A dictionary containing the tokenized input ids and labels.
+    """
     examples = [s + t for s, t in zip(sources, targets)]
     examples_tokenized, sources_tokenized = [_tokenize_fn(strings, tokenizer) for strings in (examples, sources)]
     input_ids = examples_tokenized["input_ids"]
@@ -128,6 +177,17 @@ class SupervisedDataset(Dataset):
     """Dataset for supervised fine-tuning."""
 
     def __init__(self, data_path: str, tokenizer: transformers.PreTrainedTokenizer):
+        """
+        Initialize the SupervisedDataset.
+
+        Parameters
+        ----------
+        data_path : str
+            The path to the data file.
+
+        tokenizer : transformers.PreTrainedTokenizer
+            The tokenizer instance.
+        """
         super(SupervisedDataset, self).__init__()
         logging.warning("Loading data...")
         list_data_dict = utils.jload(data_path)
@@ -146,20 +206,60 @@ class SupervisedDataset(Dataset):
         self.input_ids = data_dict["input_ids"]
         self.labels = data_dict["labels"]
 
-    def __len__(self):
+    def __len__(self) -> int:
+        """
+        Return the length of the dataset.
+        
+        Parameters
+        ----------
+        None
+
+        Returns
+        -------
+        int
+            Length of the dataset.
+        """
         return len(self.input_ids)
 
     def __getitem__(self, i) -> Dict[str, torch.Tensor]:
+        """
+        Get an item from the dataset.
+
+        Parameters
+        ----------
+        i : int
+            Index of the item to retrieve.
+
+        Returns
+        -------
+        Dict[str, torch.Tensor]
+            A dictionary containing the input_ids and labels tensors for the specified item.
+        """
         return dict(input_ids=self.input_ids[i], labels=self.labels[i])
 
 
 @dataclass
 class DataCollatorForSupervisedDataset(object):
-    """Collate examples for supervised fine-tuning."""
+    """
+    Collate examples for supervised fine-tuning.
+    """
 
     tokenizer: transformers.PreTrainedTokenizer
 
     def __call__(self, instances: Sequence[Dict]) -> Dict[str, torch.Tensor]:
+        """
+        Collate examples.
+
+        Parameters
+        ----------
+        instances : Sequence[Dict]
+            A sequence of examples.
+
+        Returns
+        -------
+        Dict[str, torch.Tensor]
+            A dictionary containing the input ids, labels, and attention mask.
+        """
         input_ids, labels = tuple([instance[key] for instance in instances] for key in ("input_ids", "labels"))
         input_ids = torch.nn.utils.rnn.pad_sequence(
             input_ids, batch_first=True, padding_value=self.tokenizer.pad_token_id
@@ -173,13 +273,41 @@ class DataCollatorForSupervisedDataset(object):
 
 
 def make_supervised_data_module(tokenizer: transformers.PreTrainedTokenizer, data_args) -> Dict:
-    """Make dataset and collator for supervised fine-tuning."""
+    """
+    Make dataset and collator for supervised fine-tuning.
+
+    Parameters
+    ----------
+    tokenizer : transformers.PreTrainedTokenizer
+        The tokenizer instance.
+
+    data_args : Any
+        Additional data arguments.
+
+    Returns
+    -------
+    Dict
+        A dictionary containing the train dataset, evaluation dataset, and data collator.
+    """
     train_dataset = SupervisedDataset(tokenizer=tokenizer, data_path=data_args.data_path)
     data_collator = DataCollatorForSupervisedDataset(tokenizer=tokenizer)
     return dict(train_dataset=train_dataset, eval_dataset=None, data_collator=data_collator)
 
 
 def train():
+    """
+    Train the model.
+
+    Parses model, data, and training arguments, initializes the model and tokenizer, preprocesses the data, and then trains the model.
+
+    Parameters
+    ----------
+    None
+
+    Returns
+    -------
+    None
+    """
     parser = transformers.HfArgumentParser((ModelArguments, DataArguments, TrainingArguments))
     model_args, data_args, training_args = parser.parse_args_into_dataclasses()
 
