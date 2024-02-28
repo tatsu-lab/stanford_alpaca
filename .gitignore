@@ -6,6 +6,10 @@ __pycache__/
 # C extensions
 *.so
 
+TEST
+#101110011
+
+
 # Distribution / packaging
 .Python
 build/
