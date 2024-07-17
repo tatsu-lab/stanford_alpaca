@@ -1,0 +1,10 @@
+Genbesøg nummer 13
+
+Nåede til 26
+
+
+6. Instruktionerne skal være 1 til 2 sætninger lange. Enten en imperativ sætning eller et spørgsmål er tilladt.
+
+6. Du skal generere et passende input til instruktionen. Inputfeltet skal indeholde et specifikt eksempel, der er givet til instruktionen. Det skal involvere realistiske data og må ikke indeholde enkle pladsholdere. Inputtet skal give væsentligt indhold for at gøre instruktionen udfordrende, men må ideelt set ikke overstige 100 ord.
+
+8. Outputtet skal være et passende svar på instruktionen og inputtet. Sørg for, at outputtet er mindre end 100 ord.

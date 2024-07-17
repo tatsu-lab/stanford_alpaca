@@ -12,6 +12,7 @@ import openai
 import tqdm
 from openai import openai_object
 import copy
+import ollama
 
 StrOrOpenAIObject = Union[str, openai_object.OpenAIObject]
 

@@ -1,14 +1,15 @@
-You are asked to come up with a set of 20 diverse task instructions. These task instructions will be given to a GPT model and we will evaluate the GPT model for completing the instructions.
+Du bliver bedt om at komme med et sæt på 15 forskellige opgaveinstruktioner. Disse opgaveinstruktioner vil blive givet til en GPT-model, og vi vil evaluere GPT-modellen for at fuldføre instruktionerne.
 
-Here are the requirements:
-1. Try not to repeat the verb for each instruction to maximize diversity.
-2. The language used for the instruction also should be diverse. For example, you should combine questions with imperative instrucitons.
-3. The type of instructions should be diverse. The list should include diverse types of tasks like open-ended generation, classification, editing, etc.
-2. A GPT language model should be able to complete the instruction. For example, do not ask the assistant to create any visual or audio output. For another example, do not ask the assistant to wake you up at 5pm or set a reminder because it cannot perform any action.
-3. The instructions should be in English.
-4. The instructions should be 1 to 2 sentences long. Either an imperative sentence or a question is permitted.
-5. You should generate an appropriate input to the instruction. The input field should contain a specific example provided for the instruction. It should involve realistic data and should not contain simple placeholders. The input should provide substantial content to make the instruction challenging but should ideally not exceed 100 words.
-6. Not all instructions require input. For example, when a instruction asks about some general information, "what is the highest peak in the world", it is not necssary to provide a specific context. In this case, we simply put "<noinput>" in the input field.
-7. The output should be an appropriate response to the instruction and the input. Make sure the output is less than 100 words.
+Her er kravene:
 
-List of 20 tasks:
+1. Forsøg at undgå at gentage verbet for hver instruktion for at maksimere mangfoldigheden.
+2. Sproget, der bruges til instruktionen, skal også være forskelligt. For eksempel skal du kombinere spørgsmål med imperativ-instruktioner.
+3. Typen af instruktioner skal være forskellig. Listen skal indeholde forskellige typer opgaver som åben generering, klassifikation, redigering osv.
+4. En GPT-sprogsmodel skal kunne fuldføre instruktionen. For eksempel må du ikke bede assistenten om at skabe visuelle eller lydmæssige output. For et andet eksempel, må du ikke bede assistenten om at vække dig kl. 17 eller sætte en påmindelse, fordi den ikke kan udføre nogen handling.
+5. Instruktionerne skal være på dansk!
+6. Enten en imperativ sætning eller et spørgsmål er tilladt.
+7. Du skal generere et passende input til instruktionen. Inputfeltet skal indeholde et specifikt eksempel, der er givet til instruktionen. Det skal involvere realistiske data og må ikke indeholde enkle pladsholdere. Inputtet skal give væsentligt indhold for at gøre instruktionen udfordrende.
+8. Ikke alle instruktioner kræver input. For eksempel, når en instruktion spørger om nogle generelle oplysninger, "hvad er den højeste top i verden", er det ikke nødvendigt at give en specifik kontekst. I dette tilfælde sætter vi blot "<noinput>" i inputfeltet.
+9. Outputtet skal være et passende svar på instruktionen og inputtet.
+
+List 20 opgaver:
