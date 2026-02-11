@@ -97,8 +97,12 @@ def _tokenize_fn(strings: Sequence[str], tokenizer: transformers.PreTrainedToken
         )
         for text in strings
     ]
-    input_ids = labels = [tokenized.input_ids[0] for tokenized in tokenized_list]
-    input_ids_lens = labels_lens = [
+    input_ids = [tokenized.input_ids[0] for tokenized in tokenized_list]
+    labels = [tokenized.input_ids[0] for tokenized in tokenized_list]
+    input_ids_lens = [
+        tokenized.input_ids.ne(tokenizer.pad_token_id).sum().item() for tokenized in tokenized_list
+    ]
+    labels_lens = [
         tokenized.input_ids.ne(tokenizer.pad_token_id).sum().item() for tokenized in tokenized_list
     ]
     return dict(
